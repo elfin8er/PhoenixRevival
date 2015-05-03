@@ -27,6 +27,7 @@ public class Main {
 			.build();
 		
 		game.getCommandDispatcher().register(this, basicCommand, "command");
+		
 	}
 	
 
