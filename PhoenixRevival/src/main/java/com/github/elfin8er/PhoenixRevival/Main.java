@@ -21,13 +21,13 @@ public class Main {
 	
 	@Subscribe
 	public void onServerInitialization(InitializationEvent event){
-		CommandSpec basicCommand = CommandSpec.builder()
-			.setDescription(Texts.of("Short Command Description"))
-			.setExecutor(new BlahCommand())
+		CommandSpec moneyCommand = CommandSpec.builder()
+			.setDescription(Texts.of("Displays how much money you currently have"))
+			.setExecutor(new CommandMoney())
 			.build();
 			
 		System.out.println(SETTINGS.StartingMoney);
-		game.getCommandDispatcher().register(this, basicCommand, "command");
+		game.getCommandDispatcher().register(this, moneyCommand, "money", "m");
 		
 	}
 	
