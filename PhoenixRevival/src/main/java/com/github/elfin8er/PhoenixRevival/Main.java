@@ -25,7 +25,7 @@ public class Main {
 			.setDescription(Texts.of("Short Command Description"))
 			.setExecutor(new BlahCommand())
 			.build();
-		
+		System.out.println(basicCommand);
 		game.getCommandDispatcher().register(this, basicCommand, "command");
 	}
 	
