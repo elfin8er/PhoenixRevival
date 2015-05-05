@@ -22,7 +22,7 @@ public class CommandGiveMoney implements CommandExecutor {
 	public CommandResult execute(CommandSource sender, CommandContext arguments) throws CommandException {
 
 		String recipient = (String) arguments.getOne("player").orNull();
-		double amount = (double) arguments.getOne("amt").orNull();
+		double amount = Double.valueOf((String) arguments.getOne("amt").orNull());
 		
 		//checks to make sure it's not negative
 		if (amount <= 0){
