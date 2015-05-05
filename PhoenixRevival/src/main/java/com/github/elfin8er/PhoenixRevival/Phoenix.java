@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.entity.player.Player;
@@ -18,6 +19,7 @@ import org.spongepowered.api.util.command.spec.CommandSpec;
 
 import com.github.elfin8er.PhoenixRevival.Commands.CommandGiveMoney;
 import com.github.elfin8er.PhoenixRevival.Commands.CommandMoney;
+import com.github.elfin8er.PhoenixRevival.Commands.CommandTakeMoney;
 import com.google.inject.Inject;
 
 @Plugin(name = "PhoenixRevival", id = "PhoenixRevival", version = "ALPHA")
