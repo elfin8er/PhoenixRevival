@@ -34,7 +34,7 @@ public class Phoenix {
 	HashMap<UUID, PhoenixPlayer> players = new HashMap<UUID, PhoenixPlayer>();
 	
 	@Subscribe
-	public void onServerInitialization(InitializationEvent event){
+	public void onPreInitialization(InitializationEvent event){
 		
 		//build commands
         HashMap<List<String>, CommandSpec> subcommands = new HashMap<>();
