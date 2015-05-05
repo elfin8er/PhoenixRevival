@@ -18,6 +18,7 @@ import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.command.args.GenericArguments;
 import org.spongepowered.api.util.command.spec.CommandSpec;
 
+import com.github.elfin8er.PhoenixRevival.Commands.CommandAuctionStart;
 import com.github.elfin8er.PhoenixRevival.Commands.CommandGiveMoney;
 import com.github.elfin8er.PhoenixRevival.Commands.CommandMoney;
 import com.github.elfin8er.PhoenixRevival.Commands.CommandTakeMoney;
@@ -78,6 +79,23 @@ public class Phoenix {
 			//.setArguments(GenericArguments.optional(null))
 			//.setExecutor(new CommandMoney(this))
 			.build();
+		
+		subcommands.clear();
+		
+		//check starts an auction    
+        subcommands.put(Arrays.asList("start", "s"), CommandSpec.builder()
+                .setPermission("phoenix.balance")
+                .setDescription(Texts.of("Balance"))
+                .setExtendedDescription(Texts.of("Initiates an auction"))
+                .setExecutor(new CommandAuctionStart(this))
+                .setArguments(null)
+                .build());
+		
+		CommandSpec auctionCommand = CommandSpec.builder()
+				.setDescription(Texts.of("Auction command"))
+				.setPermission("phoenix.auction")
+				.setChildren(subcommands)
+				.build();
 			
 		game.getCommandDispatcher().register(this, moneyCommand, "money", "m");		
 	}
@@ -90,7 +108,6 @@ public class Phoenix {
 	public void takeMoney(Player target, Player taker, double amount){
 		players.get(taker.getUniqueId()).changeMoney(amount);
 		players.get(target.getUniqueId()).changeMoney(-amount);
-		
 	}
 	
 	public void checkMoney(Player sender){
