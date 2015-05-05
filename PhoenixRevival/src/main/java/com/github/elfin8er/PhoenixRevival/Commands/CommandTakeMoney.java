@@ -22,7 +22,7 @@ public class CommandTakeMoney implements CommandExecutor {
 	public CommandResult execute(CommandSource taker, CommandContext arguments) throws CommandException {
 		
 		Player target = plugin.game.getServer().getPlayer(arguments.getOne("player").get().toString()).get();
-		double amount = (double) arguments.getOne("amt").orNull();
+		double amount = Double.parseDouble(arguments.getOne("amt").get().toString());
 		
 		//checks to make sure it's not negative
 		if (amount <= 0){
@@ -33,7 +33,7 @@ public class CommandTakeMoney implements CommandExecutor {
 		this.plugin.giveMoney(target, (Player) taker, amount);
 		
 		//tells sender that the money has been sent
-		taker.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " Taken from " + target + "."));
+		taker.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " Taken from " + target.getName() + "."));
 
 		return CommandResult.success();
 	}
