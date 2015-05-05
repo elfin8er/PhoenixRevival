@@ -66,7 +66,7 @@ public class Phoenix {
 			.setDescription(Texts.of("Displays how much money you currently have"))
 			.setPermission("phoenix.balance")
 			.setChildren(subcommands) // register subcommands
-			.setArguments(GenericArguments.none())
+			//.setArguments(GenericArguments.none())
 			.setExecutor(new CommandMoney(this))
 			.build();
 			
