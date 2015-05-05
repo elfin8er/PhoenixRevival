@@ -21,8 +21,8 @@ public class CommandGiveMoney implements CommandExecutor {
 
 	public CommandResult execute(CommandSource sender, CommandContext arguments) throws CommandException {
 
-		String recipient = (String) arguments.getOne("player").orNull();
-		double amount = Double.valueOf((String) arguments.getOne("amt").orNull());
+		Player recipient = plugin.game.getServer().getPlayer(arguments.getOne("player").get().toString()).get();
+		double amount = Double.parseDouble(arguments.getOne("amt").get().toString());
 		
 		//checks to make sure it's not negative
 		if (amount <= 0){

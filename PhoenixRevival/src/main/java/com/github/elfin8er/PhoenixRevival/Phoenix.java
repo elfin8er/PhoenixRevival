@@ -27,10 +27,10 @@ import com.google.inject.Inject;
 public class Phoenix {
 	
 	@Inject
-	Game game;
+	public Game game;
 	
 	@Inject
-	Logger logger;
+	public Logger logger;
 	
 	HashMap<UUID, PhoenixPlayer> players = new HashMap<UUID, PhoenixPlayer>();
 	
@@ -74,14 +74,14 @@ public class Phoenix {
 		game.getCommandDispatcher().register(this, moneyCommand, "money", "m");		
 	}
 	
-	public void giveMoney(String recipient, Player sender, double amount){
-		players.get(recipient).setMoney(+amount);
-		players.get(sender).setMoney(-amount);
+	public void giveMoney(Player recipient, Player sender, double amount){
+		players.get(recipient.getUniqueId()).setMoney(+amount);
+		players.get(sender.getUniqueId()).setMoney(-amount);
 	}
 	
-	public void takeMoney(String target, Player taker, double amount){
-		players.get(taker).setMoney(+amount);
-		players.get(target).setMoney(-amount);
+	public void takeMoney(Player target, Player taker, double amount){
+		players.get(taker.getUniqueId()).setMoney(+amount);
+		players.get(target.getUniqueId()).setMoney(-amount);
 		
 	}
 	
