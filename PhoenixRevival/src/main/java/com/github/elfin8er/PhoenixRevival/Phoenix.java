@@ -83,13 +83,13 @@ public class Phoenix {
 	}
 	
 	public void giveMoney(Player recipient, Player sender, double amount){
-		players.get(recipient.getUniqueId()).setMoney(+amount);
-		players.get(sender.getUniqueId()).setMoney(-amount);
+		players.get(recipient.getUniqueId()).changeMoney(amount);
+		players.get(sender.getUniqueId()).changeMoney(-amount);
 	}
 	
 	public void takeMoney(Player target, Player taker, double amount){
-		players.get(taker.getUniqueId()).setMoney(+amount);
-		players.get(target.getUniqueId()).setMoney(-amount);
+		players.get(taker.getUniqueId()).changeMoney(amount);
+		players.get(target.getUniqueId()).changeMoney(-amount);
 		
 	}
 	

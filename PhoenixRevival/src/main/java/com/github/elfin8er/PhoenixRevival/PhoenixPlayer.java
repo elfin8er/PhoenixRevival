@@ -2,17 +2,21 @@ package com.github.elfin8er.PhoenixRevival;
 
 public class PhoenixPlayer {
 
-	private Double money;
+	private double money;
 	
 	PhoenixPlayer(){
 		this.money = SETTINGS.StartingMoney;
 	}
 	
-	public void setMoney(Double amount){
+	public void setMoney(double amount){
 		this.money = amount;
 	}
 	
-	public Double getMoney(){
+	public void changeMoney(double amount){
+		this.money += amount;
+	}
+	
+	public double getMoney(){
 		return this.money;
 	}
 	
