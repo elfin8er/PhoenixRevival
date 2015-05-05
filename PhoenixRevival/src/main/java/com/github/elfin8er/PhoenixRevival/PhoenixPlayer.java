@@ -8,8 +8,8 @@ public class PhoenixPlayer {
 		this.money = SETTINGS.StartingMoney;
 	}
 	
-	public void setMoney(Double amt){
-		this.money = amt;
+	public void setMoney(Double amount){
+		this.money = amount;
 	}
 	
 	public Double getMoney(){
