@@ -62,7 +62,15 @@ public class Phoenix {
                 .setExecutor(new CommandTakeMoney(this))
                 .build());
         
-        //check balance        
+        //check balance    
+        subcommands.put(Arrays.asList("balance"), CommandSpec.builder()
+                .setPermission("phoenix.balance")
+                .setDescription(Texts.of("Balance"))
+                .setExtendedDescription(Texts.of("This will return how much money you have"))
+                .setExecutor(new CommandMoney(this))
+                .build());
+        
+        
 		CommandSpec moneyCommand = CommandSpec.builder()
 			.setDescription(Texts.of("Displays how much money you currently have"))
 			.setPermission("phoenix.balance")
