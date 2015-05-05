@@ -34,6 +34,7 @@ public class CommandGiveMoney implements CommandExecutor {
 		
 		//tells taker that the money has been taken
 		sender.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " sent to " + recipient.getName() + "."));
+		recipient.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " received from " + sender.getName() + "."));
 		
 		return CommandResult.success();
 	}
