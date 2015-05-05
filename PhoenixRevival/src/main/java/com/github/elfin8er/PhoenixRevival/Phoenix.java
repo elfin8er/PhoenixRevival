@@ -68,7 +68,7 @@ public class Phoenix {
 			.setPermission("phoenix.balance")
 			.setChildren(subcommands) // register subcommands
 			//.setArguments(GenericArguments.optional(null))
-			.setExecutor(new CommandMoney(this))
+			//.setExecutor(new CommandMoney(this))
 			.build();
 			
 		game.getCommandDispatcher().register(this, moneyCommand, "money", "m");		
