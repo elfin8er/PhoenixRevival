@@ -85,7 +85,7 @@ public class Phoenix {
 	}
 	
 	public void checkMoney(Player sender){
-		sender.sendMessage(Texts.of("Current balance : " + players.get(sender).getMoney() + SETTINGS.CurrencySymbol));
+		sender.sendMessage(Texts.of("Current balance : " + players.get(sender.getUniqueId()).getMoney() + SETTINGS.CurrencySymbol));
 	}
 	
 	@Subscribe
