@@ -12,6 +12,7 @@ import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
 import org.spongepowered.api.event.state.InitializationEvent;
+import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.command.args.GenericArguments;
@@ -34,7 +35,7 @@ public class Phoenix {
 	HashMap<UUID, PhoenixPlayer> players = new HashMap<UUID, PhoenixPlayer>();
 	
 	@Subscribe
-	public void onPreInitialization(InitializationEvent event){
+	public void onPreInitialization(PreInitializationEvent event){
 		
 		//build commands
         HashMap<List<String>, CommandSpec> subcommands = new HashMap<>();
