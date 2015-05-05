@@ -40,7 +40,7 @@ public class Phoenix {
         HashMap<List<String>, CommandSpec> subcommands = new HashMap<>();
         
         //give money
-        subcommands.put(Arrays.asList("give", "donate"), CommandSpec.builder()
+        subcommands.put(Arrays.asList("give", "donate", "pay"), CommandSpec.builder()
                 .setPermission("phoenix.givemoney")
                 .setDescription(Texts.of("Give money"))
                 .setExtendedDescription(Texts.of("This will give the set amount to the player"))
@@ -68,18 +68,8 @@ public class Phoenix {
 			.setChildren(subcommands) // register subcommands
 			.setExecutor(new CommandMoney(this))
 			.build();
-		
-		CommandSpec payCommand = CommandSpec.builder()
-				.setDescription(Texts.of("Pay a player"))
-				.setExecutor(new CommandPay())
-				.setArguments(GenericArguments.seq(
-						GenericArguments.string(Texts.of("player")), 
-						GenericArguments.integer(Texts.of("amount"))))
-				.build();
 			
-		game.getCommandDispatcher().register(this, moneyCommand, "money", "m");
-		game.getCommandDispatcher().register(this, payCommand, "pay", "p");
-		
+		game.getCommandDispatcher().register(this, moneyCommand, "money", "m");		
 	}
 	
 	public void giveMoney(String recipient, Player sender, double amount){
