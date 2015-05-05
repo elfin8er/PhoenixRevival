@@ -33,7 +33,7 @@ public class CommandTakeMoney implements CommandExecutor {
 		this.plugin.giveMoney(target, (Player) taker, amount);
 		
 		//tells sender that the money has been sent
-		taker.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " Taken from " + target + "."));
+		taker.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " Taken from " + target.getName() + "."));
 
 		return CommandResult.success();
 	}
