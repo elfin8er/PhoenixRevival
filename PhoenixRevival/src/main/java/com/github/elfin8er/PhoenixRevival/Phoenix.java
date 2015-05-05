@@ -47,7 +47,7 @@ public class Phoenix {
                 .setExtendedDescription(Texts.of("This will give the set amount to the player"))
                 .setArguments(GenericArguments.seq(
                         GenericArguments.string(Texts.of("player")), // "string(...)" instead of "player(...)" to support offline players
-                        GenericArguments.remainingJoinedStrings(Texts.of("amt"))))
+                        GenericArguments.integer(Texts.of("amt"))))
                 .setExecutor(new CommandGiveMoney(this))
                 .build());
         
@@ -58,7 +58,7 @@ public class Phoenix {
                 .setExtendedDescription(Texts.of("This will take from the player's account, admin use only"))
                 .setArguments(GenericArguments.seq(
                         GenericArguments.string(Texts.of("player")), // "string(...)" instead of "player(...)" to support offline players
-                        GenericArguments.remainingJoinedStrings(Texts.of("amt"))))
+                        GenericArguments.integer(Texts.of("amt"))))
                 .setExecutor(new CommandTakeMoney(this))
                 .build());
         
