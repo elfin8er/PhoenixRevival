@@ -10,14 +10,17 @@ import com.github.elfin8er.PhoenixRevival.Phoenix;
 
 public class CommandAuctionStart implements CommandExecutor {
 
+	Phoenix plugin;
+	
 	public CommandAuctionStart(Phoenix phoenix) {
-		// TODO Auto-generated constructor stub
+		this.plugin = phoenix;
 	}
 
 	@Override
-	public CommandResult execute(CommandSource arg0, CommandContext arg1)
-			throws CommandException {
-		// TODO Auto-generated method stub
+	public CommandResult execute(CommandSource sender, CommandContext arguments) throws CommandException {
+		int quantity = Integer.parseInt(arguments.getOne("quantity").get().toString());
+		int amt = Integer.parseInt(arguments.getOne("amt").get().toString()); //Starting bid
+		
 		return null;
 	}
 

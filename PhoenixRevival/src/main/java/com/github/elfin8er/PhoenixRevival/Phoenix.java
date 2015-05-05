@@ -1,6 +1,7 @@
 package com.github.elfin8er.PhoenixRevival;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,6 @@ import org.spongepowered.api.Game;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
-import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Texts;
@@ -34,6 +34,7 @@ public class Phoenix {
 	public Logger logger;
 	
 	HashMap<UUID, PhoenixPlayer> players = new HashMap<UUID, PhoenixPlayer>();
+	ArrayList<PhoenixAuction> auctions = new ArrayList<PhoenixAuction>();
 	
 	@Subscribe
 	public void onPreInitialization(PreInitializationEvent event){
@@ -88,24 +89,34 @@ public class Phoenix {
                 .setDescription(Texts.of("Balance"))
                 .setExtendedDescription(Texts.of("Initiates an auction"))
                 .setExecutor(new CommandAuctionStart(this))
-                .setArguments(null)
+                .setArguments(GenericArguments.seq(
+						GenericArguments.integer(Texts.of("quantity")),
+						GenericArguments.integer(Texts.of("amt"))
+						))
                 .build());
 		
+        /*
+         * COMMAND USAGE
+         * /auction start <quantity> <starting_amount> - Simplest way to create an auction. Auctions the item in the players hand.
+         */
 		CommandSpec auctionCommand = CommandSpec.builder()
 				.setDescription(Texts.of("Auction command"))
 				.setPermission("phoenix.auction")
 				.setChildren(subcommands)
 				.build();
 			
-		game.getCommandDispatcher().register(this, moneyCommand, "money", "m");		
+		game.getCommandDispatcher().register(this, moneyCommand, "money", "m");
+		game.getCommandDispatcher().register(this, auctionCommand, "auction", "auc", "a");
 	}
 	
 	public void giveMoney(Player recipient, Player sender, double amount){
+		//TODO - Make sure that the play has enough money
 		players.get(recipient.getUniqueId()).changeMoney(amount);
 		players.get(sender.getUniqueId()).changeMoney(-amount);
 	}
 	
 	public void takeMoney(Player target, Player taker, double amount){
+		//TODO - Make sure that the play has enough money
 		players.get(taker.getUniqueId()).changeMoney(amount);
 		players.get(target.getUniqueId()).changeMoney(-amount);
 	}
