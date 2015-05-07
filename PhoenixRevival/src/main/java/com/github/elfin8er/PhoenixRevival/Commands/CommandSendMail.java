@@ -9,30 +9,25 @@ import org.spongepowered.api.util.command.spec.CommandExecutor;
 
 import com.github.elfin8er.PhoenixRevival.Phoenix;
 
-public class CommandGiveMoney implements CommandExecutor {
+public class CommandSendMail implements CommandExecutor{
 
 	private Phoenix plugin;
 	
-	public CommandGiveMoney(Phoenix plugin) {
+	public CommandSendMail(Phoenix phoenix) {
         this.plugin = plugin;
 	}
 
 	public CommandResult execute(CommandSource sender, CommandContext arguments) throws CommandException {
-
 		Player recipient = plugin.game.getServer().getPlayer(arguments.getOne("player").get().toString()).get();
-		double amount = Double.parseDouble(arguments.getOne("amt").get().toString());
+		String message = (String) arguments.getOne("msg").orNull();
 		
-		//checks to make sure it's not negative
-		if (amount <= 0){
-			return CommandResult.empty();
-		}
-		
-		//gives money
-		this.plugin.giveMoney(recipient,(Player) sender, amount);
-		
-
-		
+		//checks to see if message is null
+        if (message == null || message == "") {
+            return CommandResult.empty();
+        }
+        
+        String mail = sender.getName() + ": " + message;
+        this.plugin.sendMail((Player) sender, recipient, mail);
 		return CommandResult.success();
 	}
-
 }

@@ -19,8 +19,10 @@ import org.spongepowered.api.util.command.args.GenericArguments;
 import org.spongepowered.api.util.command.spec.CommandSpec;
 
 import com.github.elfin8er.PhoenixRevival.Commands.CommandAuctionStart;
+import com.github.elfin8er.PhoenixRevival.Commands.CommandCheckMail;
 import com.github.elfin8er.PhoenixRevival.Commands.CommandGiveMoney;
 import com.github.elfin8er.PhoenixRevival.Commands.CommandMoney;
+import com.github.elfin8er.PhoenixRevival.Commands.CommandSendMail;
 import com.github.elfin8er.PhoenixRevival.Commands.CommandTakeMoney;
 import com.google.inject.Inject;
 
@@ -75,10 +77,35 @@ public class Phoenix {
         
 		CommandSpec moneyCommand = CommandSpec.builder()
 			.setDescription(Texts.of("Displays how much money you currently have"))
+			.setChildren(subcommands) // register subcommands
+			.build();
+		
+		subcommands.clear();
+		
+        //send mail
+        subcommands.put(Arrays.asList("send"), CommandSpec.builder()
+                .setPermission("phoenix.mailSend")
+                .setDescription(Texts.of("Send mail"))
+                .setExtendedDescription(Texts.of("Send a message to a player"))
+                .setArguments(GenericArguments.seq(
+                        GenericArguments.string(Texts.of("player")), // "string(...)" instead of "player(...)" to support offline players
+                        GenericArguments.remainingJoinedStrings(Texts.of("msg"))))
+                .setExecutor(new CommandSendMail(this))
+                .build());
+        
+        //check mail
+        subcommands.put(Arrays.asList("read", "check"), CommandSpec.builder()
+                .setPermission("phoenix.mailCheck")
+                .setDescription(Texts.of("Check mail"))
+                .setExtendedDescription(Texts.of("Check received messages"))
+                .setExecutor(new CommandCheckMail(this))
+                .build());
+        
+        
+		CommandSpec mailCommand = CommandSpec.builder()
+			.setDescription(Texts.of("Displays how much money you currently have"))
 			.setPermission("phoenix.balance")
 			.setChildren(subcommands) // register subcommands
-			//.setArguments(GenericArguments.optional(null))
-			//.setExecutor(new CommandMoney(this))
 			.build();
 		
 		subcommands.clear();
@@ -106,6 +133,7 @@ public class Phoenix {
 				.build();
 			
 		game.getCommandDispatcher().register(this, moneyCommand, "money", "m");
+		game.getCommandDispatcher().register(this, mailCommand, "mail", "post");
 		game.getCommandDispatcher().register(this, auctionCommand, "auction", "auc", "a");
 	}
 	
@@ -113,16 +141,50 @@ public class Phoenix {
 		//TODO - Make sure that the play has enough money
 		players.get(recipient.getUniqueId()).changeMoney(amount);
 		players.get(sender.getUniqueId()).changeMoney(-amount);
+		
+		//tells players about the change
+		sender.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " sent to " + recipient.getName() + "."));
+		sender.sendMessage(Texts.of("Your new balance is " + players.get(sender.getUniqueId()).getMoney()));
+		recipient.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " received from " + sender.getName() + "."));
+		recipient.sendMessage(Texts.of("Your new balance is " + players.get(recipient.getUniqueId()).getMoney()));
 	}
 	
 	public void takeMoney(Player target, Player taker, double amount){
 		//TODO - Make sure that the play has enough money
 		players.get(taker.getUniqueId()).changeMoney(amount);
 		players.get(target.getUniqueId()).changeMoney(-amount);
+		
+		//tells players about the change
+		taker.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " Taken from " + target.getName() + "."));
+		taker.sendMessage(Texts.of("Your new balance is " + players.get(taker.getUniqueId()).getMoney()));
+		target.sendMessage(Texts.of("Amount of " + amount + SETTINGS.CurrencySymbol +  " Taken by " + taker.getName() + "."));
+		target.sendMessage(Texts.of("Your new balance is " + players.get(target.getUniqueId()).getMoney()));
 	}
 	
 	public void checkMoney(Player sender){
 		sender.sendMessage(Texts.of("Current balance : " + players.get(sender.getUniqueId()).getMoney() + SETTINGS.CurrencySymbol));
+	}
+	
+	public void sendMail(Player sender, Player recipient, String mail){
+		players.get(recipient).addMail(mail);
+		players.get(sender).changeMoney(-SETTINGS.costPerMail);
+		sender.sendMessage(Texts.of("Message sent to " + recipient.getName() + ", you have been charged " + SETTINGS.costPerMail + SETTINGS.CurrencySymbol));
+	}
+	
+	public void checkMail(Player sender){
+		List<String> mails = players.get(sender).getmail();
+		
+		if (mails.isEmpty()){
+		sender.sendMessage(Texts.of("No mail"));
+		} else{
+			for (String mail : mails){
+				sender.sendMessage(Texts.of(mail));
+			}
+		}
+	}
+	
+	public void clearMail(){
+		
 	}
 	
 	@Subscribe
